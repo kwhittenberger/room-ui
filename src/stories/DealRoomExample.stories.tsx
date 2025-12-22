@@ -22,23 +22,25 @@ import {
 } from 'lucide-react';
 
 import { Layout } from '../components/Layout';
-import { Sidebar } from '../components/Sidebar';
+import { Sidebar, SidebarHeader, SidebarFooter, SidebarGroup } from '../components/Sidebar';
+import type { SidebarItemProps } from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import { Button } from '../components/Button';
-import { Input } from '../components/Input';
 import { Badge } from '../components/Badge';
 import { Avatar } from '../components/Avatar';
 import { DataTable } from '../components/DataTable';
+import type { DataTableColumn, DataTableAction } from '../components/DataTable';
 import { StatCard } from '../components/StatCard';
 import { StatsCardGrid } from '../components/StatsCardGrid';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/Tabs';
+import { Tabs } from '../components/Tabs';
+import type { Tab } from '../components/Tabs';
 import { Stack } from '../components/Stack';
 import { Text } from '../components/Text';
 import { Timeline } from '../components/Timeline';
-
 import { Modal } from '../components/Modal';
 import { SearchInput } from '../components/SearchInput';
 import { Select } from '../components/Select';
+import { Input } from '../components/Input';
 import { Progress } from '../components/Progress';
 
 const meta: Meta = {
@@ -51,8 +53,20 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-// Sample data
-const deals = [
+// Sample data types
+interface Deal {
+  id: number;
+  name: string;
+  company: string;
+  value: number;
+  stage: string;
+  progress: number;
+  assignee: { name: string; avatar: string };
+  dueDate: string;
+  status: 'on-track' | 'at-risk' | 'delayed';
+}
+
+const deals: Deal[] = [
   {
     id: 1,
     name: 'Acme Corp Acquisition',
@@ -152,24 +166,16 @@ const formatCurrency = (value: number) => {
 
 const DealRoomDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDeal, setSelectedDeal] = useState<typeof deals[0] | null>(null);
+  const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
   const [isNewDealModalOpen, setIsNewDealModalOpen] = useState(false);
 
-  const sidebarItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home, href: '#' },
-    { id: 'deals', label: 'Deals', icon: FileText, href: '#', badge: '5' },
-    { id: 'contacts', label: 'Contacts', icon: Users, href: '#' },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '#' },
-    { id: 'calendar', label: 'Calendar', icon: Calendar, href: '#' },
-    { id: 'settings', label: 'Settings', icon: Settings, href: '#' },
-  ];
-
-  const columns = [
+  const columns: DataTableColumn<Deal>[] = [
     {
-      key: 'name',
+      id: 'name',
       header: 'Deal',
+      accessor: 'name',
       sortable: true,
-      render: (row: typeof deals[0]) => (
+      cell: (_value: unknown, row: Deal) => (
         <div>
           <Text className="font-medium text-slate-100">{row.name}</Text>
           <Text size="sm" className="text-slate-400">{row.company}</Text>
@@ -177,35 +183,37 @@ const DealRoomDashboard = () => {
       ),
     },
     {
-      key: 'value',
+      id: 'value',
       header: 'Value',
+      accessor: 'value',
       sortable: true,
-      render: (row: typeof deals[0]) => (
-        <Text className="font-medium text-slate-100">{formatCurrency(row.value)}</Text>
+      cell: (value: unknown) => (
+        <Text className="font-medium text-slate-100">{formatCurrency(value as number)}</Text>
       ),
     },
     {
-      key: 'stage',
+      id: 'stage',
       header: 'Stage',
+      accessor: 'stage',
       sortable: true,
-      render: (row: typeof deals[0]) => (
-        <Badge variant="default">{row.stage}</Badge>
-      ),
+      cell: (value: unknown) => <Badge variant="default">{String(value)}</Badge>,
     },
     {
-      key: 'progress',
+      id: 'progress',
       header: 'Progress',
-      render: (row: typeof deals[0]) => (
+      accessor: 'progress',
+      cell: (value: unknown) => (
         <div className="w-32">
-          <Progress value={row.progress} size="sm" />
-          <Text size="xs" className="text-slate-400 mt-1">{row.progress}%</Text>
+          <Progress value={value as number} size="sm" />
+          <Text size="xs" className="text-slate-400 mt-1">{String(value)}%</Text>
         </div>
       ),
     },
     {
-      key: 'assignee',
+      id: 'assignee',
       header: 'Assignee',
-      render: (row: typeof deals[0]) => (
+      accessor: (row) => row.assignee.name,
+      cell: (_value: unknown, row: Deal) => (
         <div className="flex items-center gap-2">
           <Avatar name={row.assignee.name} size="sm" />
           <Text size="sm" className="text-slate-300">{row.assignee.name}</Text>
@@ -213,9 +221,10 @@ const DealRoomDashboard = () => {
       ),
     },
     {
-      key: 'status',
+      id: 'status',
       header: 'Status',
-      render: (row: typeof deals[0]) => {
+      accessor: 'status',
+      cell: (value: unknown) => {
         const variants: Record<string, 'success' | 'warning' | 'error'> = {
           'on-track': 'success',
           'at-risk': 'warning',
@@ -226,26 +235,27 @@ const DealRoomDashboard = () => {
           'at-risk': 'At Risk',
           'delayed': 'Delayed',
         };
-        return (
-          <Badge variant={variants[row.status]}>{labels[row.status]}</Badge>
-        );
+        return <Badge variant={variants[String(value)]}>{labels[String(value)]}</Badge>;
       },
     },
   ];
 
-  const actions = [
+  const actions: DataTableAction<Deal>[] = [
     {
+      id: 'view',
       label: 'View Details',
-      onClick: (row: typeof deals[0]) => setSelectedDeal(row),
+      onClick: (rows) => setSelectedDeal(rows[0]),
     },
     {
+      id: 'edit',
       label: 'Edit',
       onClick: () => {},
     },
     {
+      id: 'archive',
       label: 'Archive',
       onClick: () => {},
-      variant: 'danger' as const,
+      variant: 'danger',
     },
   ];
 
@@ -253,20 +263,85 @@ const DealRoomDashboard = () => {
   const avgProgress = Math.round(deals.reduce((sum, deal) => sum + deal.progress, 0) / deals.length);
   const atRiskCount = deals.filter(d => d.status === 'at-risk' || d.status === 'delayed').length;
 
+  const dealDetailTabs: Tab[] = selectedDeal ? [
+    {
+      id: 'overview',
+      label: 'Overview',
+      content: (
+        <Stack gap="md">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Text size="sm" className="text-slate-400">Company</Text>
+              <Text className="text-slate-100">{selectedDeal.company}</Text>
+            </div>
+            <div>
+              <Text size="sm" className="text-slate-400">Deal Value</Text>
+              <Text className="text-slate-100">{formatCurrency(selectedDeal.value)}</Text>
+            </div>
+            <div>
+              <Text size="sm" className="text-slate-400">Stage</Text>
+              <Badge variant="default">{selectedDeal.stage}</Badge>
+            </div>
+            <div>
+              <Text size="sm" className="text-slate-400">Due Date</Text>
+              <Text className="text-slate-100">{selectedDeal.dueDate}</Text>
+            </div>
+          </div>
+          <div>
+            <Text size="sm" className="text-slate-400 mb-2">Progress</Text>
+            <Progress value={selectedDeal.progress} />
+            <Text size="sm" className="text-slate-400 mt-1">{selectedDeal.progress}% complete</Text>
+          </div>
+          <div>
+            <Text size="sm" className="text-slate-400 mb-2">Assigned To</Text>
+            <div className="flex items-center gap-2">
+              <Avatar name={selectedDeal.assignee.name} size="sm" />
+              <Text className="text-slate-200">{selectedDeal.assignee.name}</Text>
+            </div>
+          </div>
+        </Stack>
+      ),
+    },
+    {
+      id: 'documents',
+      label: 'Documents',
+      content: <Text className="text-slate-400">No documents uploaded yet.</Text>,
+    },
+    {
+      id: 'team',
+      label: 'Team',
+      content: <Text className="text-slate-400">Team members will appear here.</Text>,
+    },
+    {
+      id: 'activity',
+      label: 'Activity',
+      content: <Text className="text-slate-400">Activity log will appear here.</Text>,
+    },
+  ] : [];
+
   return (
     <Layout
       sidebar={
-        <Sidebar
-          items={sidebarItems}
-          header={
+        <Sidebar>
+          <SidebarHeader>
             <div className="flex items-center gap-2 px-2">
               <div className="h-8 w-8 rounded-lg bg-cyan-500 flex items-center justify-center">
                 <Building2 className="h-5 w-5 text-white" />
               </div>
               <Text className="font-semibold text-slate-100">Deal Room</Text>
             </div>
-          }
-          footer={
+          </SidebarHeader>
+          <SidebarGroup
+            items={[
+              { id: 'dashboard', label: 'Dashboard', icon: <Home className="h-4 w-4" />, active: true },
+              { id: 'deals', label: 'Deals', icon: <FileText className="h-4 w-4" />, badge: '5' },
+              { id: 'contacts', label: 'Contacts', icon: <Users className="h-4 w-4" /> },
+              { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="h-4 w-4" /> },
+              { id: 'calendar', label: 'Calendar', icon: <Calendar className="h-4 w-4" /> },
+              { id: 'settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
+            ] as SidebarItemProps[]}
+          />
+          <SidebarFooter>
             <div className="flex items-center gap-3 px-2">
               <Avatar name="John Smith" size="sm" />
               <div className="flex-1 min-w-0">
@@ -274,8 +349,8 @@ const DealRoomDashboard = () => {
                 <Text size="xs" className="text-slate-400 truncate">john@company.com</Text>
               </div>
             </div>
-          }
-        />
+          </SidebarFooter>
+        </Sidebar>
       }
     >
       <div className="p-6 space-y-6">
@@ -283,7 +358,7 @@ const DealRoomDashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <Text className="text-2xl font-semibold text-slate-100">Dashboard</Text>
-            <Text className="text-slate-400">Welcome back, John. Here's your deal overview.</Text>
+            <Text className="text-slate-400">Welcome back, John. Here&apos;s your deal overview.</Text>
           </div>
           <div className="flex items-center gap-3">
             <SearchInput
@@ -392,57 +467,7 @@ const DealRoomDashboard = () => {
             title={selectedDeal.name}
             size="lg"
           >
-            <Tabs defaultValue="overview">
-              <TabsList>
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="documents">Documents</TabsTrigger>
-                <TabsTrigger value="team">Team</TabsTrigger>
-                <TabsTrigger value="activity">Activity</TabsTrigger>
-              </TabsList>
-              <TabsContent value="overview" className="mt-4">
-                <Stack gap="md">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Text size="sm" className="text-slate-400">Company</Text>
-                      <Text className="text-slate-100">{selectedDeal.company}</Text>
-                    </div>
-                    <div>
-                      <Text size="sm" className="text-slate-400">Deal Value</Text>
-                      <Text className="text-slate-100">{formatCurrency(selectedDeal.value)}</Text>
-                    </div>
-                    <div>
-                      <Text size="sm" className="text-slate-400">Stage</Text>
-                      <Badge variant="default">{selectedDeal.stage}</Badge>
-                    </div>
-                    <div>
-                      <Text size="sm" className="text-slate-400">Due Date</Text>
-                      <Text className="text-slate-100">{selectedDeal.dueDate}</Text>
-                    </div>
-                  </div>
-                  <div>
-                    <Text size="sm" className="text-slate-400 mb-2">Progress</Text>
-                    <Progress value={selectedDeal.progress} />
-                    <Text size="sm" className="text-slate-400 mt-1">{selectedDeal.progress}% complete</Text>
-                  </div>
-                  <div>
-                    <Text size="sm" className="text-slate-400 mb-2">Assigned To</Text>
-                    <div className="flex items-center gap-2">
-                      <Avatar name={selectedDeal.assignee.name} size="sm" />
-                      <Text className="text-slate-200">{selectedDeal.assignee.name}</Text>
-                    </div>
-                  </div>
-                </Stack>
-              </TabsContent>
-              <TabsContent value="documents" className="mt-4">
-                <Text className="text-slate-400">No documents uploaded yet.</Text>
-              </TabsContent>
-              <TabsContent value="team" className="mt-4">
-                <Text className="text-slate-400">Team members will appear here.</Text>
-              </TabsContent>
-              <TabsContent value="activity" className="mt-4">
-                <Text className="text-slate-400">Activity log will appear here.</Text>
-              </TabsContent>
-            </Tabs>
+            <Tabs tabs={dealDetailTabs} defaultTab="overview" />
           </Modal>
         )}
 
@@ -491,6 +516,44 @@ export const Dashboard: Story = {
 const DealsListView = () => {
   const [view, setView] = useState<'table' | 'cards'>('table');
 
+  const columns: DataTableColumn<Deal>[] = [
+    {
+      id: 'name',
+      header: 'Deal',
+      accessor: 'name',
+      sortable: true,
+      cell: (_value, row) => (
+        <div>
+          <Text className="font-medium text-slate-100">{row.name}</Text>
+          <Text size="sm" className="text-slate-400">{row.company}</Text>
+        </div>
+      ),
+    },
+    {
+      id: 'value',
+      header: 'Value',
+      accessor: 'value',
+      sortable: true,
+      cell: (value) => formatCurrency(value as number),
+    },
+    {
+      id: 'stage',
+      header: 'Stage',
+      accessor: 'stage',
+      cell: (value) => <Badge>{value as string}</Badge>,
+    },
+    {
+      id: 'progress',
+      header: 'Progress',
+      accessor: 'progress',
+      cell: (value) => (
+        <div className="w-24">
+          <Progress value={value as number} size="sm" />
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       <Card>
@@ -524,39 +587,7 @@ const DealsListView = () => {
           {view === 'table' ? (
             <DataTable
               data={deals}
-              columns={[
-                {
-                  key: 'name',
-                  header: 'Deal',
-                  sortable: true,
-                  render: (row) => (
-                    <div>
-                      <Text className="font-medium text-slate-100">{row.name}</Text>
-                      <Text size="sm" className="text-slate-400">{row.company}</Text>
-                    </div>
-                  ),
-                },
-                {
-                  key: 'value',
-                  header: 'Value',
-                  sortable: true,
-                  render: (row) => formatCurrency(row.value),
-                },
-                {
-                  key: 'stage',
-                  header: 'Stage',
-                  render: (row) => <Badge>{row.stage}</Badge>,
-                },
-                {
-                  key: 'progress',
-                  header: 'Progress',
-                  render: (row) => (
-                    <div className="w-24">
-                      <Progress value={row.progress} size="sm" />
-                    </div>
-                  ),
-                },
-              ]}
+              columns={columns}
               selectable
             />
           ) : (
@@ -601,6 +632,60 @@ export const DealsList: Story = {
 
 // Contact Detail View
 const ContactDetailView = () => {
+  const contactTabs: Tab[] = [
+    {
+      id: 'deals',
+      label: 'Associated Deals',
+      content: (
+        <div className="space-y-3">
+          {deals.slice(0, 2).map((deal) => (
+            <div
+              key={deal.id}
+              className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div>
+                  <Text className="font-medium text-slate-100">{deal.name}</Text>
+                  <Text size="sm" className="text-slate-400">{deal.stage}</Text>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <Text className="font-medium text-slate-100">{formatCurrency(deal.value)}</Text>
+                <ChevronRight className="h-5 w-5 text-slate-500" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'notes',
+      label: 'Notes',
+      content: <Text className="text-slate-400">No notes yet. Add your first note about this contact.</Text>,
+    },
+    {
+      id: 'activity',
+      label: 'Activity',
+      content: (
+        <Timeline
+          items={recentActivity.slice(0, 3).map(item => ({
+            ...item,
+            content: (
+              <div>
+                <Text size="sm" className="font-medium text-slate-200">{item.title}</Text>
+                <Text size="xs" className="text-slate-400">{item.description}</Text>
+                <Text size="xs" className="text-slate-500 mt-1">{item.timestamp}</Text>
+              </div>
+            ),
+          }))}
+        />
+      ),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -642,58 +727,9 @@ const ContactDetailView = () => {
 
         {/* Tabs */}
         <Card>
-          <Tabs defaultValue="deals">
-            <CardHeader>
-              <TabsList>
-                <TabsTrigger value="deals">Associated Deals</TabsTrigger>
-                <TabsTrigger value="notes">Notes</TabsTrigger>
-                <TabsTrigger value="activity">Activity</TabsTrigger>
-              </TabsList>
-            </CardHeader>
-            <CardContent>
-              <TabsContent value="deals">
-                <div className="space-y-3">
-                  {deals.slice(0, 2).map((deal) => (
-                    <div
-                      key={deal.id}
-                      className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition-colors cursor-pointer"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                          <FileText className="h-5 w-5 text-cyan-400" />
-                        </div>
-                        <div>
-                          <Text className="font-medium text-slate-100">{deal.name}</Text>
-                          <Text size="sm" className="text-slate-400">{deal.stage}</Text>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <Text className="font-medium text-slate-100">{formatCurrency(deal.value)}</Text>
-                        <ChevronRight className="h-5 w-5 text-slate-500" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </TabsContent>
-              <TabsContent value="notes">
-                <Text className="text-slate-400">No notes yet. Add your first note about this contact.</Text>
-              </TabsContent>
-              <TabsContent value="activity">
-                <Timeline
-                  items={recentActivity.slice(0, 3).map(item => ({
-                    ...item,
-                    content: (
-                      <div>
-                        <Text size="sm" className="font-medium text-slate-200">{item.title}</Text>
-                        <Text size="xs" className="text-slate-400">{item.description}</Text>
-                        <Text size="xs" className="text-slate-500 mt-1">{item.timestamp}</Text>
-                      </div>
-                    ),
-                  }))}
-                />
-              </TabsContent>
-            </CardContent>
-          </Tabs>
+          <CardContent className="p-6">
+            <Tabs tabs={contactTabs} defaultTab="deals" />
+          </CardContent>
         </Card>
       </div>
     </div>
