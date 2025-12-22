@@ -13,10 +13,10 @@ Create `@room-ui` as a **drop-in replacement** for `@papernote/ui` with:
 
 | Metric | Target | Current | Gap |
 |--------|--------|---------|-----|
-| Components | 117 | 44 | 73 |
-| Hooks | 19 | 2 | 17 |
-| Utilities | 18 | 1 | 17 |
-| Context Providers | 7 | 1 | 6 |
+| Components | 117 | ~97 | ~20 |
+| Hooks | 19 | ~14 | ~5 |
+| Utilities | 18 | ~5 | ~13 |
+| Context Providers | 7 | 4 | 3 |
 
 ## Phase Overview
 
@@ -26,12 +26,12 @@ Create `@room-ui` as a **drop-in replacement** for `@papernote/ui` with:
 | B | Core Feedback | 6 | CRITICAL | [x] COMPLETE |
 | C | Navigation | 7 | HIGH | [x] COMPLETE |
 | D | Advanced Form Controls | 10 | HIGH | [x] COMPLETE |
-| E | Data Display | 8 | HIGH | [ ] |
-| F | Data Tables | 8 | HIGH | [ ] |
-| G | Layout | 10 | HIGH | [ ] |
-| H | Mobile | 11 + hooks | MEDIUM | [ ] |
-| I | Advanced | 12 | MEDIUM | [ ] |
-| J | Remaining + Polish | 39+ | MEDIUM | [ ] |
+| E | Data Display | 8 | HIGH | [x] COMPLETE |
+| F | Data Tables | 8 | HIGH | [x] COMPLETE |
+| G | Layout | 10 | HIGH | [x] COMPLETE |
+| H | Mobile | 11 + hooks | MEDIUM | [x] COMPLETE |
+| I | Advanced | 12 | MEDIUM | [x] COMPLETE |
+| J | Remaining + Polish | 39+ | MEDIUM | [ ] ← NEXT |
 
 ## Quick Start
 
@@ -44,11 +44,7 @@ Create `@room-ui` as a **drop-in replacement** for `@papernote/ui` with:
 
 | File | Description |
 |------|-------------|
-| `phase-A-infrastructure.md` | Tailwind CSS 4 upgrade, theme system |
-| `phase-E-data-display.md` | Loading/Skeleton, Avatar, EmptyState, Chip, Timeline, TreeView, Calendar |
-| `phase-F-data-tables.md` | DataTable, DataGrid, Spreadsheet, FilterBar, ExportButton |
-| `phase-G-layout.md` | Layout, AppLayout, Page, Dashboard, ActionBar, StatusBar |
-| `phase-H-mobile.md` | BottomSheet, BottomNavigation, SwipeActions, PullToRefresh, MobileProvider |
+| `phase-A-infrastructure.md` | Tailwind CSS 4 upgrade, theme system (deferred) |
 | `phase-I-advanced.md` | Form system, KanbanBoard, RichTextEditor, Slider, ColorPicker |
 | `phase-J-remaining.md` | All remaining components, utilities, Storybook stories |
 
@@ -56,6 +52,7 @@ Create `@room-ui` as a **drop-in replacement** for `@papernote/ui` with:
 - `archive/phase-B-core-feedback.md` - Toast, Modal, Alert, ConfirmDialog, Tooltip, Popover
 - `archive/phase-C-navigation.md` - Tabs, Breadcrumbs, Sidebar, Menu, Dropdown, Pagination, Accordion
 - `archive/phase-D-form-controls.md` - MultiSelect, Switch, DatePicker, TimePicker, Combobox, NumberInput, etc.
+- Phases E-H completed (Data Display, Data Tables, Layout, Mobile)
 
 ## Theme Mapping Quick Reference
 

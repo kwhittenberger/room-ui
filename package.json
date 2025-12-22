@@ -31,7 +31,10 @@
     "prepublishOnly": "npm run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "docs:dev": "vitepress dev docs-site",
+    "docs:build": "vitepress build docs-site",
+    "docs:preview": "vitepress preview docs-site"
   },
   "peerDependencies": {
     "lucide-react": ">=0.400.0",
@@ -70,7 +73,8 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.50.1",
     "vite": "^6.0.5",
-    "vite-plugin-dts": "^4.3.0"
+    "vite-plugin-dts": "^4.3.0",
+    "vitepress": "^1.6.4"
   },
   "keywords": [
     "react",

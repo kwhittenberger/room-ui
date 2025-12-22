@@ -9,7 +9,21 @@
       "mcp__filesystem__create_directory",
       "Bash(npm run type-check:*)",
       "Bash(npm run build-storybook:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__edit_file",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Deal Room example stories and fix ESLint config\n\n- Add DealRoomExample.stories.tsx with Dashboard, DealsList, ContactDetail examples\n- Create ESLint 9 flat config with relaxed rules for Storybook stories\n- Update CLAUDE.md with sample application story guidelines\n- Install ESLint 9 dependencies \\(@eslint/js, typescript-eslint, globals\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nRelease v0.2.0 - Badge enhancements\n\n- Add pulse prop for attention-grabbing animation\n- Add dot prop for colored dot indicator\n- Add icon prop for custom icons in badges\n- Add outline variant \\(transparent with border\\)\n- Add StatusBadge statuses: archived, cancelled, on-hold, review\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git tag:*)",
+      "Bash(gh run:*)",
+      "Bash(git commit:*)",
+      "Bash(npm view:*)",
+      "Bash(python3:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run docs:build:*)"
     ]
   }
 }
