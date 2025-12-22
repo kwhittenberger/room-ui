@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Room UI Base Styles */
+@layer base {
+  :root {
+    /* Background colors */
+    --room-bg-base: #0f172a;
+    --room-bg-elevated: #1e293b;
+    --room-bg-surface: #334155;
+    --room-bg-hover: #475569;
+
+    /* Text colors */
+    --room-text-primary: #f8fafc;
+    --room-text-secondary: #e2e8f0;
+    --room-text-muted: #94a3b8;
+    --room-text-disabled: #64748b;
+
+    /* Accent colors */
+    --room-accent: #06b6d4;
+    --room-accent-hover: #0891b2;
+    --room-accent-active: #0e7490;
+    --room-accent-muted: #164e63;
+
+    /* Semantic colors */
+    --room-success: #10b981;
+    --room-success-muted: #064e3b;
+    --room-warning: #f59e0b;
+    --room-warning-muted: #78350f;
+    --room-error: #ef4444;
+    --room-error-muted: #7f1d1d;
+    --room-info: #3b82f6;
+    --room-info-muted: #1e3a8a;
+
+    /* Border colors */
+    --room-border: #334155;
+    --room-border-hover: #475569;
+    --room-border-focus: #06b6d4;
+
+    /* Border radius */
+    --room-radius-sm: 0.25rem;
+    --room-radius: 0.5rem;
+    --room-radius-lg: 0.75rem;
+    --room-radius-xl: 1rem;
+
+    /* Shadows */
+    --room-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --room-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+    --room-shadow-glow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+
+  /* Dark mode by default */
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-room-bg-base text-room-text-secondary antialiased;
+    font-family: 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-room-accent ring-offset-2 ring-offset-room-bg-base;
+  }
+}
+
+@layer components {
+  /* Animations */
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+
+  /* Button base styles */
+  .room-btn {
+    @apply inline-flex items-center justify-center gap-2 font-medium transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-room-accent focus-visible:ring-offset-2 focus-visible:ring-offset-room-bg-base;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  /* Input base styles */
+  .room-input {
+    @apply w-full rounded-room-sm border border-room-border bg-room-bg-surface px-3 py-2;
+    @apply text-room-text-primary placeholder:text-room-text-muted;
+    @apply focus:border-room-accent focus:outline-none focus:ring-1 focus:ring-room-accent;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Card base styles */
+  .room-card {
+    @apply rounded-room-lg border border-room-border bg-room-bg-elevated shadow-room;
+  }
+}

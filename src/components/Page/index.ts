@@ -1,0 +1,2 @@
+export { Page, default } from './Page';
+export type { PageProps } from './Page';
