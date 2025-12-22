@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-12-22
+
+### Added
+
+#### Badge Enhancements
+- **pulse** prop - Adds pulsing animation for attention-grabbing badges
+- **dot** prop - Shows a colored dot indicator before badge text
+- **icon** prop - Support for custom icons in badges
+- **outline** variant - New transparent badge style with border
+
+#### StatusBadge New Statuses
+- `archived` - For archived items (neutral variant)
+- `cancelled` - For cancelled items (error variant)
+- `on-hold` - For paused/waiting items (warning variant)
+- `review` - For items in review (info variant)
+
+#### Sample Application Stories
+- **DealRoomExample** - Real-world Deal Room application stories showing Dashboard, Deals List, and Contact Detail views
+
+#### Developer Experience
+- ESLint 9 flat config support
+- Relaxed hooks rules for Storybook stories
+
+---
+
 ## [0.1.0] - 2025-12-22
 
 ### Added
