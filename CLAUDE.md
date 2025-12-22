@@ -89,3 +89,36 @@ import 'room-ui/styles.css';
 ```
 
 Consumers must include `room-ui/styles.css` for Tailwind CSS styles to work.
+
+## Development Guidelines
+
+### Sample Application Stories
+
+**IMPORTANT**: When adding new components or making significant updates to this library, always create or update a sample application story in `src/stories/` that demonstrates how the components work together in a real-world context.
+
+The `DealRoomExample.stories.tsx` file contains example stories showing:
+- **Dashboard**: Full application layout with sidebar, stats cards, data table, and activity feed
+- **DealsList**: Table and card view toggle for data display
+- **ContactDetail**: Detail page with tabs, timeline, and related items
+
+These stories serve multiple purposes:
+1. **Documentation**: Show users how to combine components effectively
+2. **Testing**: Ensure components work well together
+3. **Showcase**: Demonstrate the library's capabilities
+4. **Dogfooding**: Verify the library meets real application needs
+
+When creating sample stories:
+- Use realistic data structures and content
+- Combine multiple components (Layout, Cards, Tables, Modals, etc.)
+- Include interactive elements (state, modals, forms)
+- Follow the dark theme aesthetic
+- Place stories in `src/stories/` directory
+
+### Adding New Components
+
+1. Create component directory: `src/components/ComponentName/`
+2. Implement component: `ComponentName.tsx`
+3. Create re-export: `index.ts`
+4. Add to `src/components/index.ts`
+5. Create Storybook story: `ComponentName.stories.tsx`
+6. Update sample application stories if the component is significant
