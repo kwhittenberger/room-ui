@@ -333,3 +333,141 @@ export {
   type Breakpoint,
   type UseResponsiveResult,
 } from './MobileContext';
+
+// Advanced Components (Phase I)
+export { Slider, type SliderProps } from './Slider';
+export { ColorPicker, type ColorPickerProps } from './ColorPicker';
+export { Stepper, type StepperProps, type StepConfig } from './Stepper';
+export {
+  Form,
+  FormContext,
+  useFormContext,
+  type FormProps,
+  type FormContextValue,
+  type ValidationRule,
+  type FieldErrors,
+} from './Form';
+export { FieldArray, type FieldArrayProps } from './FieldArray';
+export { FormWizard, type FormWizardProps, type WizardStep } from './FormWizard';
+export {
+  CommandPalette,
+  useCommandPalette,
+  type CommandPaletteProps,
+  type Command,
+} from './CommandPalette';
+export {
+  KanbanBoard,
+  type KanbanBoardProps,
+  type KanbanColumn,
+  type KanbanCard,
+} from './KanbanBoard';
+export { Transfer, type TransferProps, type TransferItem } from './Transfer';
+export { Carousel, type CarouselProps, type CarouselItem } from './Carousel';
+export { RichTextEditor, type RichTextEditorProps } from './RichTextEditor';
+export { MarkdownEditor, type MarkdownEditorProps } from './MarkdownEditor';
+
+// Display Components (Phase J)
+export { Separator, type SeparatorProps } from './Separator';
+export { StatCard, type StatCardProps } from './StatCard';
+export { StatsGrid, StatItem, type StatsGridProps, type StatItemProps } from './StatsGrid';
+export { CompactStat, type CompactStatProps, type CompactStatTrend } from './CompactStat';
+export { CurrencyDisplay, type CurrencyDisplayProps } from './CurrencyDisplay';
+export { CurrencyInput, type CurrencyInputProps } from './CurrencyInput';
+export { DateDisplay, type DateDisplayProps } from './DateDisplay';
+export { StepIndicator, type StepIndicatorProps, type Step } from './StepIndicator';
+
+// UI Components (Phase J)
+export { Logo, type LogoProps } from './Logo';
+export { ThemeToggle, type ThemeToggleProps } from './ThemeToggle';
+export { SearchBar, type SearchBarProps } from './SearchBar';
+export { UserProfileButton, type UserProfileButtonProps } from './UserProfileButton';
+export { NotificationIndicator, type NotificationIndicatorProps } from './NotificationIndicator';
+export {
+  NotificationBell,
+  type NotificationBellProps,
+  type NotificationItem,
+  type NotificationBellPosition,
+  type NotificationBellStyle,
+} from './NotificationBell';
+export {
+  NotificationBanner,
+  type NotificationBannerProps,
+  type NotificationBannerAction,
+} from './NotificationBanner';
+
+// Advanced Components (Phase J)
+export {
+  Autocomplete,
+  type AutocompleteProps,
+  type AutocompleteOption,
+  type AutocompleteHandle,
+} from './Autocomplete';
+export {
+  PasswordInput,
+  type PasswordInputProps,
+  type PasswordInputHandle,
+  type PasswordStrength,
+} from './PasswordInput';
+export {
+  MaskedInput,
+  type MaskedInputProps,
+  type MaskedInputHandle,
+  type MaskType,
+} from './MaskedInput';
+export { InfiniteScroll, type InfiniteScrollProps } from './InfiniteScroll';
+export { DropZone, type DropZoneProps } from './DropZone';
+export { FileUpload, type FileUploadProps, type UploadedFile } from './FileUpload';
+export { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary';
+export { Collapsible, type CollapsibleProps } from './Collapsible';
+export {
+  ExpandablePanel,
+  ExpandablePanelSpacer,
+  ExpandablePanelContainer,
+  type ExpandablePanelProps,
+} from './ExpandablePanel';
+
+// Remaining Components (Phase J)
+export { CheckboxList, type CheckboxListProps, type CheckboxListItem } from './CheckboxList';
+export { SearchableList, type SearchableListProps, type SearchableListItem } from './SearchableList';
+export { ContextMenu, type ContextMenuProps } from './ContextMenu';
+export { LoadingOverlay, type LoadingOverlayProps } from './LoadingOverlay';
+export {
+  Show,
+  Hide,
+  useMediaQuery as useResponsiveMediaQuery,
+  type ResponsiveProps as ShowHideProps,
+  type Breakpoint as ResponsiveBreakpoint,
+} from './ResponsiveUtilities';
+
+// Additional Components (Phase J Continued)
+export { Drawer, type DrawerProps, type DrawerPlacement, type DrawerSize } from './Drawer';
+export { AlertDialog, type AlertDialogProps, type AlertDialogVariant } from './AlertDialog';
+export { HoverCard, type HoverCardProps, type HoverCardPlacement } from './HoverCard';
+export { Progress, type ProgressProps, type ProgressVariant, type ProgressSize } from './Progress';
+
+// Specialized Components (Phase J Final)
+export {
+  TimezoneSelector,
+  getLocalTimezone,
+  isValidTimezone,
+  type TimezoneSelectorProps,
+  type TimezoneOption,
+} from './TimezoneSelector';
+export {
+  NotificationBar,
+  type NotificationBarProps,
+  type NotificationBarVariant,
+  type NotificationBarPosition,
+  type NotificationBarAction as NotificationBarActionType,
+} from './NotificationBar';
+export {
+  QueryTransparency,
+  type QueryTransparencyProps,
+  type QueryTransparencyInfo,
+} from './QueryTransparency';
+export { AdminModal, type AdminModalProps, type AdminModalTab } from './AdminModal';
+export { CardView, type CardViewProps, type CardViewItem } from './CardView';
+export { ExpandableToolbar, type ExpandableToolbarProps, type ToolbarSection } from './ExpandableToolbar';
+export { FilterStatusBanner, type FilterStatusBannerProps } from './FilterStatusBanner';
+export { ExpandableRowButton, type ExpandableRowButtonProps } from './ExpandableRowButton';
+export { StatsCardGrid, type StatsCardGridProps } from './StatsCardGrid';

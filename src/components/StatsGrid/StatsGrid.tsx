@@ -1,0 +1,69 @@
+import React from 'react';
+import { cn } from '../../utils/cn';
+
+export interface StatItemProps {
+  label: string;
+  value: string | number;
+  icon?: React.ReactNode;
+  subtitle?: string;
+  className?: string;
+}
+
+export interface StatsGridProps {
+  children: React.ReactNode;
+  columns?: 2 | 3 | 4;
+  className?: string;
+}
+
+/**
+ * Individual stat display item (for non-card usage)
+ */
+export function StatItem({ label, value, className = '' }: StatItemProps) {
+  return (
+    <div className={cn('flex flex-col', className)}>
+      <span className="text-sm text-slate-400 mb-2">{label}</span>
+      <span className="text-xl font-semibold text-slate-100">{value}</span>
+    </div>
+  );
+}
+
+/**
+ * Responsive grid container for displaying statistics cards
+ * Uses CSS custom properties for responsive behavior
+ */
+export function StatsGrid({
+  children,
+  columns = 3,
+  className = ''
+}: StatsGridProps) {
+  const gridId = `stats-grid-${Math.random().toString(36).substr(2, 9)}`;
+  
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          #${gridId} {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem;
+          }
+          @media (min-width: 768px) {
+            #${gridId} {
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+          }
+          @media (min-width: 1024px) {
+            #${gridId} {
+              grid-template-columns: repeat(${columns}, minmax(0, 1fr));
+            }
+          }
+        `
+      }} />
+      <div id={gridId} className={className}>
+        {children}
+      </div>
+    </>
+  );
+}
+
+export default StatsGrid;

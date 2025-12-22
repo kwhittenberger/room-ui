@@ -141,6 +141,20 @@
     animation: slide-down 0.3s ease-out;
   }
 
+  /* Indeterminate progress animation */
+  @keyframes indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(250%);
+    }
+  }
+
+  .animate-indeterminate {
+    animation: indeterminate 1.5s ease-in-out infinite;
+  }
+
   /* Button base styles */
   .room-btn {
     @apply inline-flex items-center justify-center gap-2 font-medium transition-colors;
