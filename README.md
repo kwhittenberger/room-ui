@@ -3,7 +3,8 @@
 [![npm version](https://img.shields.io/npm/v/room-ui.svg)](https://www.npmjs.com/package/room-ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-[![Storybook](https://img.shields.io/badge/Storybook-8.0-ff4785)](https://6949986ceb769ed38d88c5ee-oisdnmkbty.chromatic.com/)
+[![Storybook](https://img.shields.io/badge/Storybook-8.0-ff4785)](https://main--6949986ceb769ed38d88c5ee.chromatic.com/)
+[![GitHub Pages](https://img.shields.io/badge/Docs-GitHub%20Pages-blue)](https://kwhittenberger.github.io/room-ui/)
 
 A modern React component library with a dark, professional aesthetic designed for Deal Room and data-intensive applications. Built with TypeScript, Tailwind CSS, and designed for production use.
 
@@ -501,6 +502,7 @@ See [LICENSE](./LICENSE) for full details.
 ## Links
 
 - [npm Package](https://www.npmjs.com/package/room-ui)
-- [Live Storybook](https://6949986ceb769ed38d88c5ee-oisdnmkbty.chromatic.com/)
-- [GitHub Repository](https://github.com/dewart/room-ui)
-- [Report Issues](https://github.com/dewart/room-ui/issues)
+- [Documentation (GitHub Pages)](https://kwhittenberger.github.io/room-ui/)
+- [Live Storybook (Chromatic)](https://main--6949986ceb769ed38d88c5ee.chromatic.com/)
+- [GitHub Repository](https://github.com/kwhittenberger/room-ui)
+- [Report Issues](https://github.com/kwhittenberger/room-ui/issues)
