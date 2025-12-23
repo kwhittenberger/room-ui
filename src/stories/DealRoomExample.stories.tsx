@@ -42,6 +42,9 @@ import { SearchInput } from '../components/SearchInput';
 import { Select } from '../components/Select';
 import { Input } from '../components/Input';
 import { Progress } from '../components/Progress';
+import { CircularProgress } from '../components/CircularProgress';
+import { ScoreIndicator } from '../components/ScoreIndicator';
+import type { ScoreBreakdownItem } from '../components/ScoreIndicator';
 
 const meta: Meta = {
   title: 'Examples/Deal Room',
@@ -202,11 +205,13 @@ const DealRoomDashboard = () => {
       id: 'progress',
       header: 'Progress',
       accessor: 'progress',
-      cell: (value: unknown) => (
-        <div className="w-32">
-          <Progress value={value as number} size="sm" />
-          <Text size="xs" className="text-slate-400 mt-1">{String(value)}%</Text>
-        </div>
+      cell: (value: unknown, row: Deal) => (
+        <CircularProgress
+          value={value as number}
+          size="sm"
+          showLabel
+          variant={row.status === 'on-track' ? 'success' : row.status === 'at-risk' ? 'warning' : 'error'}
+        />
       ),
     },
     {
@@ -432,8 +437,24 @@ const DealRoomDashboard = () => {
             </Card>
           </div>
 
-          {/* Activity Feed */}
-          <div className="col-span-1">
+          {/* Sidebar: Health & Activity */}
+          <div className="col-span-1 space-y-6">
+            {/* Portfolio Health Score */}
+            <ScoreIndicator
+              percentage={avgProgress}
+              status={atRiskCount === 0 ? 'good' : atRiskCount >= 2 ? 'critical' : 'warning'}
+              title="Portfolio Health"
+              subtitle={atRiskCount === 0 ? 'Excellent' : atRiskCount >= 2 ? 'Needs Attention' : 'Monitoring'}
+              breakdown={[
+                { key: 'active', label: 'Active Deals', score: deals.length - atRiskCount, maxScore: deals.length, status: 'good' },
+                { key: 'progress', label: 'Avg Progress', score: avgProgress, maxScore: 100, status: avgProgress >= 50 ? 'good' : 'warning' },
+                { key: 'atrisk', label: 'Risk Items', score: deals.length - atRiskCount, maxScore: deals.length, status: atRiskCount === 0 ? 'good' : atRiskCount >= 2 ? 'critical' : 'warning' },
+              ] as ScoreBreakdownItem[]}
+              insights={atRiskCount > 0 ? [`${atRiskCount} deal(s) require attention`] : undefined}
+              recommendations={atRiskCount > 0 ? ['Review at-risk deals this week'] : undefined}
+            />
+
+            {/* Activity Feed */}
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -607,12 +628,14 @@ const DealsListView = () => {
                         <Text size="sm" className="text-slate-400">Value</Text>
                         <Text size="sm" className="text-slate-200">{formatCurrency(deal.value)}</Text>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <Text size="sm" className="text-slate-400">Progress</Text>
-                          <Text size="sm" className="text-slate-200">{deal.progress}%</Text>
-                        </div>
-                        <Progress value={deal.progress} size="sm" />
+                      <div className="flex items-center justify-between">
+                        <Text size="sm" className="text-slate-400">Progress</Text>
+                        <CircularProgress
+                          value={deal.progress}
+                          size="md"
+                          showLabel
+                          variant={deal.status === 'on-track' ? 'success' : deal.status === 'at-risk' ? 'warning' : 'error'}
+                        />
                       </div>
                     </div>
                   </CardContent>
@@ -696,14 +719,22 @@ const ContactDetailView = () => {
               <Avatar name="Sarah Chen" size="xl" />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <Text className="text-2xl font-semibold text-slate-100">Sarah Chen</Text>
-                    <Text className="text-slate-400">Chief Financial Officer at Acme Corporation</Text>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="ghost" icon={Mail}>Email</Button>
-                    <Button variant="ghost" icon={Phone}>Call</Button>
-                    <Button variant="primary">Schedule Meeting</Button>
+                <div>
+                <Text className="text-2xl font-semibold text-slate-100">Sarah Chen</Text>
+                <Text className="text-slate-400">Chief Financial Officer at Acme Corporation</Text>
+                </div>
+                <div className="flex items-center gap-4">
+                <ScoreIndicator
+                  percentage={85}
+                  status="good"
+                    variant="compact"
+                      title="Relationship Score"
+                    />
+                    <div className="flex gap-2">
+                      <Button variant="ghost" icon={Mail}>Email</Button>
+                      <Button variant="ghost" icon={Phone}>Call</Button>
+                      <Button variant="primary">Schedule Meeting</Button>
+                    </div>
                   </div>
                 </div>
                 <div className="flex gap-6 mt-4">
