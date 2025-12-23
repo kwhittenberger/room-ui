@@ -1,6 +1,6 @@
 {
   "name": "room-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "A modern React component library with a dark professional aesthetic - designed for Deal Room and data-intensive applications",
   "main": "./dist/index.cjs",

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-12-22
+
+### Added
+
+#### Progress & Score Components
+- **CircularProgress** - SVG-based circular progress indicator with:
+  - Size presets (sm, md, lg, xl) or custom pixel values
+  - Color variants (default, success, warning, error)
+  - Customizable stroke width and track color
+  - Optional center content (icons, labels)
+  - Custom label formatter support
+  - Animated transitions
+
+- **ScoreIndicator** - Score display component with:
+  - Compact and full display variants
+  - Score breakdown with status indicators
+  - Insights and recommendations sections
+  - Expandable details panel
+  - Click-to-action support
+  - Helper function `getStatusBgColor()`
+
+---
+
 ## [0.2.0] - 2025-12-22
 
 ### Added

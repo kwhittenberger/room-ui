@@ -471,3 +471,18 @@ export { ExpandableToolbar, type ExpandableToolbarProps, type ToolbarSection } f
 export { FilterStatusBanner, type FilterStatusBannerProps } from './FilterStatusBanner';
 export { ExpandableRowButton, type ExpandableRowButtonProps } from './ExpandableRowButton';
 export { StatsCardGrid, type StatsCardGridProps } from './StatsCardGrid';
+
+// Progress & Score Components (Phase 8)
+export {
+  CircularProgress,
+  type CircularProgressProps,
+  type CircularProgressVariant,
+  type CircularProgressSize,
+} from './CircularProgress';
+export {
+  ScoreIndicator,
+  getStatusBgColor,
+  type ScoreIndicatorProps,
+  type ScoreStatus,
+  type ScoreBreakdownItem,
+} from './ScoreIndicator';
